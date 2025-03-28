@@ -76,6 +76,7 @@ from core.data import DataBase, UserModel
 from flask_apscheduler import APScheduler
 from core.extensions import sched
 from core.blueprints.bp_data.data import test_refresh
+
 load_env()
 load_api_keys()
 
@@ -110,19 +111,15 @@ for url in db_origins:
 
 print(f"[CORS ORIGINS] received: {db_origins_parsed}")
 
-xcors = CORS(
-    app,
-)
+xcors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Define a list of allowed origins
 def_origins = db_origins_parsed + default_origins
 
 
-
 app.secret_key = "fhslcigiuchsvjksvjksgkgs"
 db.init_db()
 user_db.init_db()
-
 
 
 # ------------ CORS -------------
@@ -253,9 +250,12 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 # function is named refresh_cqn_scheduler, just replace it here
-sched.add_job(func=refreshcqn_scheduler, trigger=CronTrigger(day=1)) # start the cronjob at each 1st date of a month
+sched.add_job(
+    func=refreshcqn_scheduler, trigger=CronTrigger(day=1)
+)  # start the cronjob at each 1st date of a month
 sched.start()
-print('started scheduler!!')
+print("started scheduler!!")
+
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
@@ -341,5 +341,5 @@ def angular(path):
 
 # testing
 if __name__ == "__main__":
-    
+
     app.run(debug=True, port=5000)  # Running the app in debug mode
