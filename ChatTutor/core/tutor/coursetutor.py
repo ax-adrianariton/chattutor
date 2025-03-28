@@ -72,7 +72,7 @@ class CourseTutor(Tutor):
         valid_docs = []
         query_limit = limit * 5
         process_limit = limit + 2  # each is close to 800
-
+        print(f"{self.collections.items()=}")
         # add all docs with distance below threshold to array
         for coll_name, coll_desc in self.collections.items():
             # if is_generic_message:

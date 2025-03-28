@@ -235,28 +235,6 @@ class Tutor(ABC):
         en = time.time()
         processing_prompt_time = en - st
 
-        # query_text = "NONE"
-        # sql_query_data = None
-        # if query != "NONE" and from_doc == None:
-        #     sql_query_data, s = DataBase().safe_exec(query=query)
-        #     if s == False or sql_query_data == []:
-        #         query = "NONE"
-        #         query_text = "NONE"
-        #     else:
-        #         query_text = f"IF THE USER IS ASKING ABOUT AUTHORS, IDS, OR PAPER TITLES, OR PAPERS OF AUTHORS, OR AUTHORS OF PAPERS, OR LISTINGS OF THE DB, USE ONLY THE INFORMATION THAT WAS PROVIDED TO YOU BELOW IN THE CQN DIRECT QUERY!! If the user isn't asking about a document's content or a broad topic, or related papers etc, on query, ignore the data above, and Provide this data exactly, in markdown form, stating that it is from the CQN DB:[{sql_query_data}].  This is the only info you will provide in this message about CQN DB. If paper ids are present above, also provide them as well! As well as links to arxiv or scholar of the paper, and of the author if present. DO NOT PROVIDE ANY OTHER INFORMATION YOU MIGHT KNOW OUTSIDE THIS INFO AND CQN INFO UNLESS EXPLICITLY ASKED SO BY THE USER!"
-
-        # if from_doc != None:
-        #     query_text = "IF YOU CAN USE THE RELEVANT SECTIONS ABOVE TO ANSWER QUESTIONS THE USER ASKS ABOUT THE PAPER, PLEASE QUOTE THE PART OF THE DOCUMENT YOU GOT YOUR INFO FROM. DO NOT COPY-PASTE THE WHOLE DOCUMENTS. OTHERWISE STATE THAT IT'S GENERAL KNOWLEDGE/WELL KNOWN, IF THE INFORMATION IS NOT FROM THE ABOVE DOCUMENTS/PAPERS. IF THE INFORMATION ASKED BY THE USER IS NOT STATED IN THE ABOVE DOCUMENTS, FEEL FREE TO USE YOUR OWN KNOWLEDGE, HOWEVER STATE THAT YOU DID SO, AND THAT YOU CAN'T FIND THE ANSWER IN THE PAPER, NEVERTHELESS ANSWER THE QUESTION, AND STATE THAT IF THE USER WANTS TO SEARCH FOR THIS TOPIC IN THE PAPER HE SHOULD BE MORE PRECISE WITH HIS QUERY. DO NOT LET THE USER WITHOUT AN ANSWER! DO NOT LET THE USER WITH NO ANSWER! HELP THE USER FIND THE ANSWER TO HIS/HER QUESTION!!! "
-
-        # pprint(red("SQL_QUERY\n\n"), green(sql_query_data))
-
-        # print("\n\n\n----------\n")
-        # pprint("VALID_DOCS:\n", red(valid_docs))
-
-        # print("\n----------\n\n\n")
-        # print(green(messages[0]["content"]))
-
-        # print(red(query_text))
         try:
             response, elapsed_time = [], 0.0
             if pipeline == "gemini":
