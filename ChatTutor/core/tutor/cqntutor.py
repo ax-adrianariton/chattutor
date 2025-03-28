@@ -17,6 +17,8 @@ class CQNTutor(Tutor):
     def __init__(
         self, embedding_db, embedding_db_name="CQN database", engineer_prompts=True, gemini=True
     ):
+        self.genai_model = genai.GenerativeModel("gemini-2.0-flash")
+        self.chat = self.genai_model.start_chat(history=[])
         self.gemini = gemini
         super().__init__(embedding_db, embedding_db_name, cqn_system_message, engineer_prompts)
 

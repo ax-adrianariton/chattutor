@@ -12,6 +12,9 @@ from core.tutor.utils import truncate_to_x_number_of_tokens, get_number_of_token
 from core.data import DataBase
 
 
+import google.generativeai as genai
+
+
 class SQLQueryTutor(Tutor):
     def __init__(
         self,
@@ -21,6 +24,8 @@ class SQLQueryTutor(Tutor):
         gemini=True,
         prequery=True,
     ):
+        self.genai_model = genai.GenerativeModel("gemini-2.0-flash")
+        self.chat = self.genai_model.start_chat(history=[])
         self.prequery = prequery
         self.gemini = gemini
         super().__init__(embedding_db, embedding_db_name, cqn_system_message, engineer_prompts)
@@ -223,11 +228,12 @@ class SQLQueryTutor(Tutor):
         # Querying the database to retrieve relevant documents to the user's question
         arr = []
         # add al docs with distance below threshold to array
-
+        vd = []
         valid_docs = []
         query_limit = 0
         process_limit = 0
         show_limit = 0
+        docs = ""
 
         if "cqn_openaicol_ttv" in str(self.collections.items()):
             for coll_name, coll_desc in self.collections.items():
@@ -330,7 +336,6 @@ class SQLQueryTutor(Tutor):
             # pprint("system_message", self.system_message)
             # stringify the docs and add to context message
 
-            docs = ""
             if from_doc is not None:
                 docs = f"If the user is talking about 'this paper', he's probably refering to the paper with the id {from_doc}. You WILL find it's title below!"
             i = 0

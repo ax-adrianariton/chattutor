@@ -14,14 +14,14 @@ RUN npm run build -- --configuration=${ANGULAR_ENV}
 
 # ---- Python Setup ----
 FROM python:3.11-bookworm
-ENV PYTHONUNBUFFERED True
-ENV APP_HOME /app
-ENV PORT 5000
+ENV PYTHONUNBUFFERED=True
+ENV APP_HOME=/app
+ENV PORT=5000
 
 WORKDIR $APP_HOME
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y wget build-essential libreadline-dev zlib1g-dev
+# RUN apt-get update && apt-get install -y wget build-essential libreadline-dev zlib1g-dev
 
 # Copy built Angular app from build-angular stage
 COPY --from=build-angular /app/frontend/dist /app/frontend/dist
@@ -32,9 +32,7 @@ COPY . ./
 # Install Python dependencies -- TODO: remove --no-cache-dir
 #RUN #pip install --no-cache-dir -r requirements.txt
 RUN python3 -m pip install -r requirements.txt
-RUN python3 -m nltk.downloader words
 
-# RUN pip install -r requirements.txt
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf sqlite-autoconf-3430200.tar.gz && rm -rf sqlite-autoconf-3430200

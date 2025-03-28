@@ -62,8 +62,7 @@ class Tutor(ABC):
         self.collections = {}
         self.system_message = system_message
         self.engineer_prompts = engineer_prompts
-        self.genai_model = genai.GenerativeModel("gemini-pro")
-        self.chat = self.genai_model.start_chat(history=[])
+        print(f"gemini_models = {[m for m in genai.list_models()]}")
 
     def add_collection(self, name, desc):
         """Adds a collection to self.collections
